@@ -1,11 +1,15 @@
+
 resource "aws_kms_key" "mykey" {
   description             = "This key is used to encrypt bucket objects"
   deletion_window_in_days = 10
 }
 
 resource "aws_s3_bucket" "mybucket" {
-  bucket = "bootcamp30_01_janet"
+  bucket = "bootcamp30-01-Janet"
+
+
 }
+
 
 resource "aws_s3_bucket_server_side_encryption_configuration" "example" {
   bucket = aws_s3_bucket.mybucket.id
@@ -17,3 +21,8 @@ resource "aws_s3_bucket_server_side_encryption_configuration" "example" {
     }
   }
 }
+  
+  provider "aws" {
+  region  = "us-east-1"
+}
+
