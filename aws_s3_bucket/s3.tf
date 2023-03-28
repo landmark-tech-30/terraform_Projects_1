@@ -1,15 +1,13 @@
-
-resource "aws_kms_key" "mykey" {
-  description             = "This key is used to encrypt bucket objects"
-  deletion_window_in_days = 10
+resource "random_integer" "bucket_number" {
+  min = 1
+  max = 50000
 }
+
 
 resource "aws_s3_bucket" "mybucket" {
-  bucket = "bootcamp30-01-Janet"
-
+  bucket = format("bootcamp30-%s-%s", random_integer.bucket_number, var.name)
 
 }
-
 
 resource "aws_s3_bucket_server_side_encryption_configuration" "example" {
   bucket = aws_s3_bucket.mybucket.id
@@ -20,9 +18,5 @@ resource "aws_s3_bucket_server_side_encryption_configuration" "example" {
       sse_algorithm     = "aws:kms"
     }
   }
-}
-  
-  provider "aws" {
-  region  = "us-east-1"
 }
 
